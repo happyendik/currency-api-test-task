@@ -10,10 +10,8 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'currency'],
-                'GET v1/test/index' => 'v1/test/index',
                 'GET v1/currencies' => 'v1/currency/index',
-                'GET v1/currency/<id:[\S]+>' => 'v1/currency/view',
+                'GET v1/currency/<name:[\S]+>' => 'v1/currency/view',
             ],
         ],
         'request' => [

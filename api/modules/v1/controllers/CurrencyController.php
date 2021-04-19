@@ -53,12 +53,12 @@ class CurrencyController extends Controller
     }
 
 
-    public function actionView(int $id)
+    public function actionView(string $name)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $currency = Currency::find()
             ->select(['rate'])
-            ->andWhere(['name' => $id])
+            ->andWhere(['LIKE', 'name', $name])
             ->asArray()
             ->one()
         ;
