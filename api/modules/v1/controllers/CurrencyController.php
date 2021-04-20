@@ -45,10 +45,8 @@ class CurrencyController extends Controller
      */
     public function actionIndex()
     {
-        return Yii::createObject(ActiveDataProvider::class, [
-            [
-                'query' => Currency::find()
-            ]
+        return new ActiveDataProvider([
+            'query' => Currency::find()
         ]);
     }
 
