@@ -1,0 +1,10 @@
+suite_namespace: api\tests\functional
+actor: FunctionalTester
+modules:
+    enabled:
+        - Asserts
+        - Filesystem
+        - Yii2:
+              cleanup: true
+        - REST:
+              depends: Yii2

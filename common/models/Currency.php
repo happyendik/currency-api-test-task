@@ -2,10 +2,10 @@
 
 namespace common\models;
 
-use yii\db\ActiveRecord;
-use Yii;
 use common\models\queries\CurrencyQuery;
+use Yii;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveRecord;
 
 /**
  * Class Currency
@@ -33,6 +33,7 @@ class Currency extends ActiveRecord
         return [
             [['name', 'rate'], 'trim'],
             [['name', 'rate'], 'required'],
+            ['name', 'string'],
             ['name', 'unique'],
             ['rate', 'number']
         ];
