@@ -11,16 +11,16 @@ use yii\console\Controller;
  */
 class CurrencyController extends Controller
 {
-    public $rateService;
+    public $currencyService;
 
-    public function __construct($id, $module, $config = [], CurrencyService $rateService)
+    public function __construct($id, $module, $config = [], CurrencyService $currencyService)
     {
-        $this->rateService = $rateService;
+        $this->currencyService = $currencyService;
         parent::__construct($id, $module, $config);
     }
 
     public function actionRefreshRates()
     {
-        $this->rateService->refreshRates();
+        $this->currencyService->refreshRates();
     }
 }

@@ -16,7 +16,6 @@ class CbrRatesParser implements RatesParserInterface
      */
     public function getRates(): array
     {
-        // Для начала заберем данные за текущий момент
         $xml = new DOMDocument();
         $url = 'http://www.cbr.ru/scripts/XML_daily.asp';
 
@@ -31,7 +30,7 @@ class CbrRatesParser implements RatesParserInterface
             $nominal = str_replace(',', '.', $item->getElementsByTagName('Nominal')->item(0)->textContent);
             $value = str_replace(',', '.', $item->getElementsByTagName('Value')->item(0)->textContent);
 
-            $result[$charCode] = $this->calculateRate($value, $nominal);
+            $result[] = ['name' => strtolower($charCode), 'rate' => $this->calculateRate($value, $nominal)];
         }
 
         return $result;
