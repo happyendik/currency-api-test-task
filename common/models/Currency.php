@@ -5,7 +5,9 @@ namespace common\models;
 use common\models\queries\CurrencyQuery;
 use Yii;
 use yii\base\InvalidConfigException;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * Class Currency
@@ -14,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  * @property string $rate
+ * @property string $insert_dt
  */
 class Currency extends ActiveRecord
 {
@@ -28,6 +31,21 @@ class Currency extends ActiveRecord
     /**
      * {@inheritDoc}
      */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => false,
+                'updatedAtAttribute' => 'insert_dt',
+                'value' => new Expression('NOW()')
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function rules()
     {
         return [
@@ -35,7 +53,7 @@ class Currency extends ActiveRecord
             [['name', 'rate'], 'required'],
             ['name', 'string'],
             ['name', 'unique'],
-            ['rate', 'number']
+            ['rate', 'number'],
         ];
     }
 

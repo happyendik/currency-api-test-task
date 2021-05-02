@@ -2,15 +2,15 @@
 
 namespace api\modules\v1\controllers;
 
-use common\models\Currency;
+use api\modules\v1\models\Currency;
+use Yii;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\rest\Controller;
 use yii\web\Response;
-use Yii;
-use yii\base\InvalidConfigException;
 
 /**
  * Class CurrencyController
@@ -50,13 +50,17 @@ class CurrencyController extends Controller
         ]);
     }
 
-
+    /**
+     * @param string $name
+     * @return array|Currency|null
+     * @throws InvalidConfigException
+     */
     public function actionView(string $name)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $currency = Currency::find()
             ->select(['rate'])
-            ->andWhere(['LIKE', 'name', $name])
+            ->byName($name)
             ->asArray()
             ->one()
         ;

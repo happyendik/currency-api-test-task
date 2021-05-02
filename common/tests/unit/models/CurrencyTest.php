@@ -3,6 +3,7 @@
 namespace common\tests\unit\models;
 
 use Codeception\Test\Unit;
+use common\fixtures\CurrencyFixture;
 use common\models\Currency;
 use common\tests\UnitTester;
 
@@ -18,6 +19,16 @@ class CurrencyTest extends Unit
     protected $tester;
 
     /**
+     * @return string[]
+     */
+    public function _fixtures()
+    {
+        return [
+            CurrencyFixture::class,
+        ];
+    }
+
+    /**
      * @param array $attribute
      * @param bool $expected
      * @dataProvider validationDataProvider
@@ -29,6 +40,9 @@ class CurrencyTest extends Unit
         $this->assertEquals($expected, $model->validate(array_keys($attribute)), json_encode($attribute));
     }
 
+    /**
+     * @return array[]
+     */
     public function validationDataProvider()
     {
         return [
@@ -37,7 +51,9 @@ class CurrencyTest extends Unit
             [['name' => null], false],
             [['rate' => null], false],
             [['name' => 'UNIQUE'], true],
+            [['name' => 'usd'], false], //  есть в фикстурах
             [['rate' => '12.1234'], true],
+            [['rate' => '0.000000'], true],
         ];
     }
 }

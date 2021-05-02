@@ -2,6 +2,8 @@
 
 namespace console\parsers;
 
+use console\dto\Currency as CurrencyEntity;
+
 /**
  * Interface RatesParserInterface
  * @package console\parsers
@@ -9,7 +11,7 @@ namespace console\parsers;
 interface RatesParserInterface
 {
     /**
-     * @return array
+     * @return CurrencyEntity[]
      */
     public function getRates(): array;
 }

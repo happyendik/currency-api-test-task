@@ -28,4 +28,15 @@ class CurrencyQuery extends ActiveQuery
     {
         return parent::all($db);
     }
+
+    /**
+     * @param string $name
+     * @return CurrencyQuery
+     */
+    public function byName(string $name)
+    {
+        return $this->andWhere([
+            'LIKE', 'name', $name
+        ]);
+    }
 }

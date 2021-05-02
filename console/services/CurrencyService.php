@@ -3,8 +3,10 @@
 namespace console\services;
 
 use common\models\Currency;
+use console\dto\Currency as CurrencyDto;
 use console\models\search\CurrencySearch;
 use console\parsers\CbrRatesParser;
+use console\parsers\RatesParserInterface;
 use yii\base\InvalidConfigException;
 
 /**
@@ -19,22 +21,32 @@ class CurrencyService
     private $_dbRates;
 
     /**
+     * @var RatesParserInterface
+     */
+    private $_ratesParser;
+
+    /**
+     * @var CurrencySearch
+     */
+    private $_currencySearch;
+
+    /**
      * CurrencyService constructor.
      * @param CbrRatesParser $ratesParser
      * @param CurrencySearch $currencySearch
      */
     public function __construct(CbrRatesParser $ratesParser, CurrencySearch $currencySearch)
     {
-        $this->ratesParser = $ratesParser;
-        $this->currencySearch = $currencySearch;
+        $this->_ratesParser = $ratesParser;
+        $this->_currencySearch = $currencySearch;
     }
 
     /**
-     * Refresh rates console command for CRON
+     * @throws InvalidConfigException
      */
-    public function refreshRates()
+    public function refreshRates(): void
     {
-        foreach ($this->ratesParser->getRates() as $rate) {
+        foreach ($this->_ratesParser->getRates() as $rate) {
             if ($this->doesRateExist($rate)) {
                 $this->updateExistedRate($rate);
             } else {
@@ -44,45 +56,45 @@ class CurrencyService
     }
 
     /**
-     * @param array $rate
+     * @param CurrencyDto $rate
      * @return bool
      * @throws InvalidConfigException
      */
-    public function doesRateExist(array $rate): bool
+    public function doesRateExist(CurrencyDto $rate): bool
     {
         if (!isset($this->_dbRates)) {
-            $this->_dbRates = $this->currencySearch->mapCurrenciesToArrayWthNameAsKeys();
+            $this->_dbRates = $this->_currencySearch->mapCurrenciesToArrayWithNameAsKeys();
         }
 
-        return array_key_exists($rate['name'], $this->_dbRates);
+        return in_array($rate->getName(), $this->_dbRates);
     }
 
     /**
-     * @param array $rate
+     * @param CurrencyDto $rate
      * @return bool
      */
-    public function addNewRate(array $rate): bool
+    public function addNewRate(CurrencyDto $rate): bool
     {
         $newCurrency = new Currency([
-            'name' => $rate['name'],
-            'rate' => $rate['rate'],
+            'name' => $rate->getName(),
+            'rate' => $rate->getRate(),
         ]);
 
         return $newCurrency->save();
     }
 
     /**
-     * @param array $rate
+     * @param CurrencyDto $rate
      * @return bool
      * @throws InvalidConfigException
      */
-    public function updateExistedRate(array $rate): bool
+    public function updateExistedRate(CurrencyDto $rate): bool
     {
         $currency = Currency::find()
-            ->andWhere(['name' => $rate['name']])
-            ->one();
-
-        $currency->rate = $rate['rate'];
+            ->byName($rate->getName())
+            ->one()
+        ;
+        $currency->rate = $rate->getRate();
         return $currency->save();
     }
 }

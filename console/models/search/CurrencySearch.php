@@ -3,23 +3,24 @@
 namespace console\models\search;
 
 use console\models\Currency;
+use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 
-class CurrencySearch extends Currency
+/**
+ * Class CurrencySearch
+ * @package console\models\search
+ */
+class CurrencySearch
 {
     /**
      * @return array
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
-    public function mapCurrenciesToArrayWthNameAsKeys()
+    public function mapCurrenciesToArrayWithNameAsKeys(): array
     {
         $currencies = Currency::find()
             ->all()
         ;
-
-        return ArrayHelper::map($currencies, 'name', function ($model) {
-            return $model; //TODO: Можно сделать красивее?
-        });
-
+        return ArrayHelper::getColumn($currencies, 'name');
     }
 }

@@ -4,6 +4,7 @@ include:
     - console
     - api
 paths:
-    log: console/runtime/logs
+    log: common/tests/_output
 settings:
     colors: true
+

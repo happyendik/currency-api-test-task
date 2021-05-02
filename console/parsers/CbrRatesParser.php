@@ -2,6 +2,7 @@
 
 namespace console\parsers;
 
+use console\dto\Currency as CurrencyEntity;
 use DOMDocument;
 use DOMElement;
 
@@ -12,14 +13,18 @@ use DOMElement;
 class CbrRatesParser implements RatesParserInterface
 {
     /**
+     * @var string
+     */
+    protected $url = 'http://www.cbr.ru/scripts/XML_daily.asp';
+
+    /**
      * {@inheritDoc}
      */
     public function getRates(): array
     {
         $xml = new DOMDocument();
-        $url = 'http://www.cbr.ru/scripts/XML_daily.asp';
 
-        $xml->load($url);
+        $xml->load($this->url);
         $root = $xml->documentElement;
         $items = $root->getElementsByTagName('Valute');
 
@@ -30,7 +35,10 @@ class CbrRatesParser implements RatesParserInterface
             $nominal = str_replace(',', '.', $item->getElementsByTagName('Nominal')->item(0)->textContent);
             $value = str_replace(',', '.', $item->getElementsByTagName('Value')->item(0)->textContent);
 
-            $result[] = ['name' => strtolower($charCode), 'rate' => $this->calculateRate($value, $nominal)];
+            $result[] = new CurrencyEntity(
+                strtolower($charCode),
+                $this->calculateRate($value, $nominal)
+            );
         }
 
         return $result;
