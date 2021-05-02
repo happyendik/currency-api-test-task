@@ -18,8 +18,6 @@ composer install
 ./yii migrate
 ```
 
-./yii currency/refresh-rates
-
 ## Cron Jobs:
 
 Обновление курсов валют
@@ -28,8 +26,6 @@ composer install
 ./yii currency/refresh-rates
 ```
 ## API Interface:
-
-Протестировать: ``
 
 ### Получение всех валют с пагинацией
 
@@ -41,7 +37,7 @@ Response:
     {
         "name":"usd",
         "rate":"1.123123000000000",
-        },
+    },
     {
         "name":"eur",
         "rate":"1.333330000000000",
@@ -54,7 +50,9 @@ Request: `/v1/currency/{name}`
 
 Response:
 ```
-{"rate":"1.123123000000000"}
+{
+    "rate":"1.123123000000000"
+}
 ```
 ### Для тестирования локально
 
