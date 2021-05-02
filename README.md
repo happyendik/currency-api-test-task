@@ -1,6 +1,6 @@
-#Currency Api test task
+# Currency Api test task
 
-##Info:
+## Info:
 
 Чтобы развернуть приложение локально
 
@@ -18,11 +18,9 @@ composer install
 ./yii migrate
 ```
 
-
-
 ./yii currency/refresh-rates
 
-##Cron Jobs:
+## Cron Jobs:
 
 Обновление курсов валют
 
