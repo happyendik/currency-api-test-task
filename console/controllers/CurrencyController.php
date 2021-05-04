@@ -14,7 +14,7 @@ class CurrencyController extends Controller
     /**
      * @var CurrencyService
      */
-    public $currencyService;
+    private $_currencyService;
 
     /**
      * CurrencyController constructor.
@@ -23,12 +23,12 @@ class CurrencyController extends Controller
      */
     public function __construct($id, $module, $config = [], CurrencyService $currencyService)
     {
-        $this->currencyService = $currencyService;
+        $this->_currencyService = $currencyService;
         parent::__construct($id, $module, $config);
     }
 
     public function actionRefreshRates(): void
     {
-        $this->currencyService->refreshRates();
+        $this->_currencyService->refreshRates();
     }
 }

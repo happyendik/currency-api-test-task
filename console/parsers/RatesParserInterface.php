@@ -2,7 +2,7 @@
 
 namespace console\parsers;
 
-use console\dto\Currency as CurrencyEntity;
+use console\entities\Currency;
 
 /**
  * Interface RatesParserInterface
@@ -11,7 +11,7 @@ use console\dto\Currency as CurrencyEntity;
 interface RatesParserInterface
 {
     /**
-     * @return CurrencyEntity[]
+     * @return Currency[]
      */
     public function getRates(): array;
 }

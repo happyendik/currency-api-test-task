@@ -2,9 +2,10 @@
 
 namespace console\parsers;
 
-use console\dto\Currency as CurrencyEntity;
+use console\entities\Currency;
 use DOMDocument;
 use DOMElement;
+use Generator;
 
 /**
  * Class CbrRatesParser
@@ -22,26 +23,36 @@ class CbrRatesParser implements RatesParserInterface
      */
     public function getRates(): array
     {
+        $result = [];
+        foreach ($this->getDataFromCbr() as $data) {
+            $result[] = new Currency($data['charCode'], $data['rate']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return Generator
+     */
+    private function getDataFromCbr()
+    {
         $xml = new DOMDocument();
 
         $xml->load($this->url);
         $root = $xml->documentElement;
         $items = $root->getElementsByTagName('Valute');
 
-        $result = [];
         /** @var DOMElement $item */
         foreach ($items as $item) {
             $charCode = $item->getElementsByTagName('CharCode')->item(0)->textContent;
             $nominal = str_replace(',', '.', $item->getElementsByTagName('Nominal')->item(0)->textContent);
             $value = str_replace(',', '.', $item->getElementsByTagName('Value')->item(0)->textContent);
 
-            $result[] = new CurrencyEntity(
-                strtolower($charCode),
-                $this->calculateRate($value, $nominal)
-            );
+            yield [
+                'charCode' => strtolower($charCode),
+                'rate' => $this->calculateRate($value, $nominal)
+            ];
         }
-
-        return $result;
     }
 
     /**

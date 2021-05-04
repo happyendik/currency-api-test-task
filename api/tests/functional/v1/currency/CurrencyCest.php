@@ -30,7 +30,9 @@ class CurrencyCest
         $I->sendGet('v1/currencies');
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
-        $I->seeResponseJsonMatchesJsonPath('0.id');
+        $I->dontSeeResponseJsonMatchesJsonPath('0.id');
+        $I->dontSeeResponseJsonMatchesJsonPath('0.insert_dt');
+
         $I->seeResponseJsonMatchesJsonPath('0.name');
         $I->seeResponseJsonMatchesJsonPath('0.rate');
     }
@@ -44,6 +46,8 @@ class CurrencyCest
         $I->seeResponseIsJson();
         $I->dontSeeResponseJsonMatchesJsonPath('id');
         $I->dontSeeResponseJsonMatchesJsonPath('name');
+        $I->dontSeeResponseJsonMatchesJsonPath('insert_dt');
+
         $I->seeResponseJsonMatchesJsonPath('rate');
     }
 }
