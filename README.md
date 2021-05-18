@@ -58,6 +58,6 @@ Response:
 
 Нужно добавить запись в таблицу `user` и значение `auth_key` использовать для Bearer-авторизации
 
-`curl -i -H "Authorization: Bearer {auth_key}" "http://beststocks.test/v1/currencies"`
+`curl -i -H "Authorization: Bearer {auth_key}" "http://localhost/v1/currencies"`
 
-`curl -i -H "Authorization: Bearer {auth_key}" "http://beststocks.test/v1/currency/usd"`
+`curl -i -H "Authorization: Bearer {auth_key}" "http://localhost/v1/currency/usd"`
