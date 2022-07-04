@@ -39,4 +39,6 @@ phpunit.phar
 /api/web/index-test.php
 /api/web/robots.txt
 
-.env
+/.env
+
+/docker/mysql/_db/*
