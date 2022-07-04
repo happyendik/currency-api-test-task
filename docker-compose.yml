@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+  php-fpm:
+    build:
+      args:
+        user: currency-microservice
+        uid: 1000
+      context: ./docker
+      dockerfile: Dockerfile
+    image: currency-microservice-php-fpm
+    container_name: currency-microservice-php-fpm
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www/
+    networks:
+      - currency-microservice
+
+  mysql:
+    image: mysql:5.7
+    container_name: currency-microservice-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/_db:/var/lib/mysql
+    networks:
+      - currency-microservice
+
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: currency-microservice-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - currency-microservice
+
+networks:
+  currency-microservice:
+    driver: bridge
