@@ -17,7 +17,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: test
+          MYSQL_ROOT_PASSWORD: root123
           MYSQL_PASSWORD: test
           MYSQL_USER: test
         ports:
@@ -63,8 +63,8 @@ jobs:
           php ./init --env=Development
           php ./yii migrate
         env:
-          DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
-          TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+          DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test
+          TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test
 
       - name: Run Tests
         run: |
@@ -72,5 +72,5 @@ jobs:
           nohup php -S localhost:8080 > yii.log 2>&1 &
           vendor/bin/codecept run
         env:
-          DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
-          TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=yii
+          DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test
+          TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test
