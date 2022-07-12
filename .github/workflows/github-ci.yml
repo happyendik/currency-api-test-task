@@ -5,9 +5,9 @@ jobs:
     name: Yii2 (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-18.04
     env:
-      DB_USERNAME: test
+      DB_USERNAME: root
       DB_PASSWORD: test
-      TEST_DB_USERNAME: test
+      TEST_DB_USERNAME: root
       TEST_DB_PASSWORD: test
       DB_CHARSET: utf8
 
@@ -17,9 +17,7 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: root123
-          MYSQL_PASSWORD: test
-          MYSQL_USER: test
+          MYSQL_ROOT_PASSWORD: test
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3

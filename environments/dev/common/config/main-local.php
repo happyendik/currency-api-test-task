@@ -3,8 +3,8 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => $_ENV['TEST_DB_DSN'],
-            'username' => 'test',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=test;port=49153',
+            'username' => 'root',
             'password' => 'test',
             'charset' => 'utf8',
         ],
