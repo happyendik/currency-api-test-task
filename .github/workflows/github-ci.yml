@@ -59,7 +59,7 @@ jobs:
         run: |
           php -r "file_exists('.env') || copy('.env.dist', '.env');"
           php ./init --env=Development
-          php ./yii migrate
+          php ./yii migrate --interactive=0
         env:
           DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test
           TEST_DB_DSN: mysql:host=127.0.0.1;port=${{ job.services.mysql.ports['3306'] }};dbname=test

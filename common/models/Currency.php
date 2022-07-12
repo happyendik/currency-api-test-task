@@ -22,7 +22,7 @@ class Currency extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'currency';
+        return '{{%currency}}';
     }
 
     /**
