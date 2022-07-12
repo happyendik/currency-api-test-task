@@ -5,10 +5,10 @@ jobs:
     name: Yii2 (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-18.04
     env:
-      DB_USERNAME: root
-      DB_PASSWORD: yii
-      TEST_DB_USERNAME: root
-      TEST_DB_PASSWORD: yii
+      DB_USERNAME: test
+      DB_PASSWORD: test
+      TEST_DB_USERNAME: test
+      TEST_DB_PASSWORD: test
       DB_CHARSET: utf8
 
     services:
