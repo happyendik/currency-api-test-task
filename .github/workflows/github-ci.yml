@@ -59,6 +59,7 @@ jobs:
 
       - name: Prepare the application
         run: |
+          sleep 1m
           php -r "file_exists('.env') || copy('.env.dist', '.env');"
           php ./init --env=Development
           php ./yii migrate
