@@ -3,7 +3,6 @@ return [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-//            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
             'dsn' => $_ENV['DB_DSN'],
             'username' => 'root',
             'password' => '',
