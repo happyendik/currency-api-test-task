@@ -2,7 +2,7 @@ name: Testing Yii2 with MySQL
 on: [push, pull_request]
 jobs:
   yii:
-    name: Yii2 (PHP 7.2)
+    name: Yii2 (PHP 7.4)
     runs-on: ubuntu-18.04
     env:
       DB_USERNAME: root
@@ -33,7 +33,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.2'
+          php-version: '7.4'
           extensions: mbstring, intl, gd, imagick, zip, dom, mysql
           coverage: xdebug
 
